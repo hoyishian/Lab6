@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 /**
@@ -102,8 +103,66 @@ public class Colosseum {
      * (Look, we can return objects too!)
      */
     public static Pokemon buildPokemon() {
-        Pokemon returnPokemon = null;
-        return returnPokemon;
+        // Type
+        Colosseum.printTypeMenu();
+
+        int type = myScan.nextInt();
+        while (type < 1 || type > 3) {
+            System.out.println("Sorry, you must pick either 1, 2 or 3.");
+            type = myScan.nextInt();
+        }
+
+        Pokemon tempPokemon = new Pokemon();
+
+        if (type == 1) {
+            tempPokemon = new ElectricPokemon();
+        } else if (type == 2) {
+            tempPokemon = new FirePokemon();
+        } else if (type == 3) {
+            tempPokemon = new WaterPokemon();
+        }
+
+
+        // Name
+        System.out.println("Please name your Pokemon.");
+         tempPokemon.setName(myScan.next());
+
+
+        // HitPoints
+
+        System.out.println("How many hit points will it have? (1-50):");
+        int hp = myScan.nextInt();
+        while (hp < 1 || hp > 50) {
+            System.out.println("Sorry. Hit points must be between 1 and 50:");
+            hp = myScan.nextInt();
+        }
+        tempPokemon.setHitPoints(hp);
+
+        //Attack Points and Defense Points
+
+        System.out.println("Split fifty points between attack level and defense level");
+        System.out.println("Enter your attack level (1-49):");
+
+        int attackPoints = myScan.nextInt();
+        while (attackPoints < 1 || attackPoints > 49) {
+            System.out.println("Sorry. Attack points must be between 1 and 49:");
+            attackPoints = myScan.nextInt();
+        }
+        tempPokemon.setAttackLevel(attackPoints);
+
+        int maxDefense = 50 - attackPoints;
+
+        System.out.println("Enter your Defense level (1-" + maxDefense + ")");
+        int defensePoints = myScan.nextInt();
+        while (defensePoints < 1 || defensePoints > maxDefense) {
+            System.out.println("Sorry. Defense points must be between 1 and " + maxDefense);
+            defensePoints = myScan.nextInt();
+        }
+
+        tempPokemon.setDefenseLevel(defensePoints);
+
+        return tempPokemon;
+
     }
 
     /**
